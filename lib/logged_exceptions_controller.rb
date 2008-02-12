@@ -43,10 +43,16 @@ class LoggedExceptionsController < ActionController::Base
   
   def show
     @exc = LoggedException.find params[:id]
+    respond_to do |format|
+      format.js { }
+    end
   end
   
   def destroy
     LoggedException.destroy params[:id]
+    respond_to do |format|
+      format.js { }
+    end
   end
   
   def destroy_all
