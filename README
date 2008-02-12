@@ -68,3 +68,8 @@ CREDITS
 Jamis Buck  - original exception_notification plugin
 Rick Olson  - model/controller code
 Josh Goebel - design
+
+UPDATES
+
+Chris Wanstrath - use will_paginate
+Henrik Nyh (DanceJam) - catch exceptions in development mode

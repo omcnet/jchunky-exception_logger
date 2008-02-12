@@ -54,10 +54,10 @@ module ExceptionLoggable
     !self.class.local_addresses.detect { |addr| addr.include?(remote) }.nil?
   end
 
-  def rescue_action_in_public(exception)
+  def rescue_action(exception)
     status = response_code_for_rescue(exception)
-    render_optional_error_file status
     log_exception(exception) if status != :not_found
+    super
   end
 
   def log_exception(exception)
