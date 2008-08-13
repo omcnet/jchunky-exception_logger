@@ -22,13 +22,22 @@ ExceptionLogger = {
   
   deleteAll: function() {
     return Form.serialize('query-form') + '&' + $$('tr.exception').collect(function(tr) { return tr.getAttribute('id').gsub(/^\w+-/, ''); }).toQueryString('ids');
+  },
+  
+  // If the user visits /logged_exceptions#e123, show exception with id 123
+  showFromHash: function() {
+    if (m = location.hash.match(/^#e(\d+)$/))
+      new Ajax.Request('/logged_exceptions/show/'+m[1], {asynchronous:true, evalScripts:true});
   }
+  
 }
 
 Event.observe(window, 'load', function() {
   ExceptionLogger.filters.each(function(context) {
     $(context + '_filter').value = '';
   });
+  
+  ExceptionLogger.showFromHash();
 });
 
 Object.extend(Array.prototype, {

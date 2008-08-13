@@ -22,8 +22,10 @@
     <tr id="exception-<%= exc.id %>" class="<%= cycle("eor", "") %> exception">
       <td>
 <div class="expclass">
-
-<%= link_to_remote "#{exc.exception_class} in #{exc.controller_action}", :url => { :action => 'show', :id => exc } %></div>
+<%= link_to_remote("#{exc.exception_class} in #{exc.controller_action}",
+  { :url => { :action => 'show', :id => exc } },
+  :href => url_for(:anchor => "e#{exc.id}")).sub('return false;', '')  %>
+</div>
 <span class="message"><%=h exc.message %></span>
 
 </td>
