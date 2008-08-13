@@ -72,4 +72,4 @@ Josh Goebel - design
 UPDATES
 
 Chris Wanstrath - use will_paginate
-Henrik Nyh (DanceJam) - catch exceptions in development mode
+Henrik Nyh (DanceJam) - catch exceptions in development mode, linkable exceptions
