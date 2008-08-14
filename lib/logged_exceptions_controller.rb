@@ -11,10 +11,6 @@ class LoggedExceptionsController < ActionController::Base
   def query
     conditions = []
     parameters = []
-    unless params[:id].blank?
-      conditions << 'id = ?'
-      parameters << params[:id]
-    end
     unless params[:query].blank?
       conditions << 'message LIKE ?'
       parameters << "%#{params[:query]}%"
