@@ -14,7 +14,17 @@
 
 <h2>Request</h2>
 
-<%= textilize(@exc.request) %>
+<div class="request">
+  <%= textilize(filter_parameters_in_string(@exc.request)) %>
+  <% if filtered_params? %>
+      <p><%= link_to_function('Reveal filtered parameters', '$$("div.request").invoke("toggle")') %></p>
+    </div>
+
+    <div class="request" style="display:none">
+      <%= textilize(@exc.request) %>
+      <p><%= link_to_function('Hide filtered parameters', '$$("div.request").invoke("toggle")') %></p>  
+  <% end %>
+</div>
 
 <h2>Backtrace</h2>
 

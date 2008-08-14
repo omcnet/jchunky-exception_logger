@@ -43,6 +43,9 @@ class LoggedExceptionsController < ActionController::Base
   
   def show
     @exc = LoggedException.find params[:id]
+    @unfiltered_request = @exc.request
+    @filtered_request   = filter_parameters_in_string(@unfiltered_request)
+    
     respond_to do |format|
       format.js { }
     end
@@ -74,4 +77,21 @@ class LoggedExceptionsController < ActionController::Base
       auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
       return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
     end
+    
+    def filter_parameters_in_string(text)
+      # This method uses eval on data from users; however, the regexp includes
+      # linebreaks, which the user can't sneak in unescaped.
+      text.sub(%r{(\n\* Parameters: )(\{.+?\})(\n)}) do
+        $1 + 
+        (respond_to?(:filter_parameters) ? filter_parameters(eval($2)).inspect : $2) + 
+        $3
+      end
+    end
+    
+    def filtered_params?
+      @unfiltered_request != @filtered_request
+    end
+    
+    helper_method :filter_parameters_in_string, :filtered_params?
+
 end

@@ -63,6 +63,19 @@ It's understandable that you may want to require authentication.  Add this to yo
 
 The exact code of course depends on the specific needs of your application.
 
+You can use ActionController::Base.filter_parameter_logging in the LoggedExceptionsController.
+In the code given above, do something like
+
+  LoggedExceptionsController.class_eval do
+    filter_parameter_logging :password
+  end
+
+When viewing a logged exception, parameters whose name has "password" as a substring
+will show their values as "[FILTERED]". There is a link to toggle this filtering, in
+case you really must have a look.
+
+Note that GET parameters will still be shown unfiltered within the logged URL.
+
 CREDITS
 
 Jamis Buck  - original exception_notification plugin
@@ -72,4 +85,4 @@ Josh Goebel - design
 UPDATES
 
 Chris Wanstrath - use will_paginate
-Henrik Nyh (DanceJam) - catch exceptions in development mode, linkable exceptions
+Henrik Nyh (DanceJam) - Henrik Nyh (DanceJam) - log exceptions in dev, linkable exceptions, parameter filtering
