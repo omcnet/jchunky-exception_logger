@@ -85,4 +85,5 @@ Josh Goebel - design
 UPDATES
 
 Chris Wanstrath - use will_paginate
-Henrik Nyh (DanceJam) - Henrik Nyh (DanceJam) - log exceptions in dev, linkable exceptions, parameter filtering
+Henrik Nyh (DanceJam) - log exceptions in dev, linkable exceptions, parameter filtering
+ 
