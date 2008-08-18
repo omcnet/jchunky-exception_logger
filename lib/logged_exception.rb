@@ -5,7 +5,7 @@ class LoggedException < ActiveRecord::Base
       message << "\n* Extra Data\n\n#{data}" unless data.blank?
       create! \
         :exception_class => exception.class.name,
-        :controller_name => controller.controller_name,
+        :controller_name => controller.controller_path,
         :action_name     => controller.action_name,
         :message         => message,
         :backtrace       => exception.backtrace,
