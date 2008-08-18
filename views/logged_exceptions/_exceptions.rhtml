@@ -24,7 +24,7 @@
 <div class="expclass">
 <%= link_to_remote("#{exc.exception_class} in #{exc.controller_action}",
   { :url => { :action => 'show', :id => exc } },
-  :href => url_for(:anchor => "e#{exc.id}")).sub('return false;', '')  %>
+  :href => url_for(:anchor => "e#{exc.id}")) %>
 </div>
 <span class="message"><%=h exc.message %></span>
 
