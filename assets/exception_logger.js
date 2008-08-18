@@ -30,8 +30,13 @@ ExceptionLogger = {
       new Ajax.Request('/logged_exceptions/show/'+m[1], {asynchronous:true, evalScripts:true});
   },
   
+  unsetHash: function() {
+    location.hash = '#';  // if set to '', page reloads
+  },
+  
   hideDetails: function() {
     $('showpage').hide();
+    this.unsetHash();
   }
   
 }
@@ -57,6 +62,7 @@ Object.extend(Array.prototype, {
 
 Ajax.Responders.register({
   onCreate: function() {
+    ExceptionLogger.unsetHash();
     if($('activity') && Ajax.activeRequestCount > 0) $('activity').visualEffect('appear', {duration:0.25});
   },
 
