@@ -28,6 +28,10 @@ ExceptionLogger = {
   showFromHash: function() {
     if (m = location.hash.match(/^#e(\d+)$/))
       new Ajax.Request('/logged_exceptions/show/'+m[1], {asynchronous:true, evalScripts:true});
+  },
+  
+  hideDetails: function() {
+    $('showpage').hide();
   }
   
 }
@@ -35,6 +39,11 @@ ExceptionLogger = {
 Event.observe(window, 'load', function() {
   ExceptionLogger.filters.each(function(context) {
     $(context + '_filter').value = '';
+  });
+  
+  Event.observe(document, 'keypress', function(event) {
+    if (event.keyCode == Event.KEY_ESC)
+      ExceptionLogger.hideDetails();
   });
   
   ExceptionLogger.showFromHash();
