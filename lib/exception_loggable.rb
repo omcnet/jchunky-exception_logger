@@ -23,8 +23,14 @@ require 'ipaddr'
 module ExceptionLoggable
   def self.included(target)
     target.extend(ClassMethods)
-  end
 
+    ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!({
+      :exc_full => "%A, %b %d, %Y at %l:%M %p",
+      :exc_date => "%b %d, %Y",
+      :exc_time => "%l:%M %p"
+    })
+  end
+  
   module ClassMethods
     def consider_local(*args)
       local_addresses.concat(args.flatten.map { |a| IPAddr.new(a) })

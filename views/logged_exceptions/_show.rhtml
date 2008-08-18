@@ -6,7 +6,7 @@
 </div>
 
 <div class="date">
-	<%= @exc.created_at.strftime("%A, %b %d, %Y at %l:%M %p") %>
+	<%= @exc.created_at.to_s(:exc_full) %>
 </div>
 <h1>
 <%= @exc.exception_class %> in <%= @exc.controller_name.camelcase %>/<%= @exc.action_name %>
