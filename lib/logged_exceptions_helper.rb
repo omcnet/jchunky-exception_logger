@@ -10,6 +10,11 @@ module LoggedExceptionsHelper
       :next_label => '',
       :container  => false
   end
+  
+  def listify(text)
+    list_items = text.scan(/^\s*\* (.+)/).map {|match| content_tag(:li, match.first) }
+    content_tag(:ul, list_items)
+  end
 
   class PaginationRenderer < WillPaginate::LinkRenderer
     def page_link_or_span(page, span_class = 'current', text = nil)

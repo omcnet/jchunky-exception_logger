@@ -15,13 +15,13 @@
 <h2>Request</h2>
 
 <div class="request">
-  <%= textilize(filter_parameters_in_string(@exc.request)) %>
+  <%= listify(filter_parameters_in_string(@exc.request)) %>
   <% if filtered_params? %>
       <p><%= link_to_function('Reveal filtered parameters', '$$("div.request").invoke("toggle")') %></p>
     </div>
 
     <div class="request" style="display:none">
-      <%= textilize(@exc.request) %>
+      <%= listify(@exc.request) %>
       <p><%= link_to_function('Hide filtered parameters', '$$("div.request").invoke("toggle")') %></p>  
   <% end %>
 </div>
@@ -36,4 +36,4 @@
 
 <h2>Environment</h2>
 
-<%= textilize(@exc.environment) %>
+<%= listify(@exc.environment) %>
