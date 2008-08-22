@@ -15,20 +15,20 @@
 <h2>Request</h2>
 
 <div class="request">
-  <%= listify(filter_parameters_in_string(@exc.request)) %>
+  <%= listify(filter_parameters_in_string(h(@exc.request))) %>
   <% if filtered_params? %>
       <p><%= link_to_function('Reveal filtered parameters', '$$("div.request").invoke("toggle")') %></p>
     </div>
 
     <div class="request" style="display:none">
-      <%= listify(@exc.request) %>
+      <%= listify(h(@exc.request)) %>
       <p><%= link_to_function('Hide filtered parameters', '$$("div.request").invoke("toggle")') %></p>  
   <% end %>
 </div>
 
 <h2>Backtrace</h2>
 
-<%= simple_format @exc.message %>
+<%= simple_format h(@exc.message) %>
 
 <div id="backtrace">
 <%=h(@exc.backtrace).gsub(/\n/,"<br />") %>
@@ -36,4 +36,4 @@
 
 <h2>Environment</h2>
 
-<%= listify(@exc.environment) %>
+<%= listify(h(@exc.environment)) %>
