@@ -78,9 +78,24 @@ class LoggedExceptionsController < ActionController::Base
       # This method uses eval on data from users; however, the regexp includes
       # linebreaks, which the user can't sneak in unescaped.
       text.sub(%r{(\n\* Parameters: )(\{.+?\})(\n)}) do
-        $1 + 
-        (respond_to?(:filter_parameters) ? filter_parameters(eval($2)).inspect : $2) + 
-        $3
+        pre, params, post = $~.captures
+        
+        if respond_to?(:filter_parameters)
+          # Swap out object representations that don't eval,
+          # like #<ActionController::UploadedStringIO:0xb5c2bcfc>
+          swaps = []
+          unique = Time.now.to_i  # To avoid (intentional) incorrect replacements
+          params.gsub!(/=>(#<.+?>)/) do
+            swaps << $1
+            "=>:token_#{unique}_#{swaps.length}"
+          end
+          # Eval into hash and filter parameters, then turn back into string
+          params = filter_parameters(eval(params)).inspect
+          # Swap back object representations
+          params.gsub!(/:token_#{unique}_(\d+)/) { swaps[$1.to_i-1] }
+        end
+
+        pre + params + post
       end
     end
     
