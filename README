@@ -23,7 +23,8 @@ It's understandable that you may want to require authentication.  Add this to yo
 
   # config/environments/production.rb
   config.after_initialize do
-    require 'application' unless Object.const_defined?(:ApplicationController)
+    require_dependency 'application'
+    
     LoggedExceptionsController.class_eval do
       # set the same session key as the app
       session :session_key => '_beast_session_id'
