@@ -19,6 +19,15 @@ Next, you'll need to include the ExceptionLoggable module into ApplicationContro
 
 After that, visit /logged_exceptions in your application to manage the exceptions.
 
+Email notify config:
+LoggedExceptionsMailer.mailer_config.update( {
+  :subject     => 'Exception',
+  :recipients  => "me@gmail.com",
+  :from        => 'system@domain.com',
+  :link        => 'http://domain.com',
+  :deliver     => true
+})
+
 It's understandable that you may want to require authentication.  Add this to your config/environments/production.rb:
 
   # config/environments/production.rb
@@ -87,4 +96,5 @@ UPDATES
 
 Chris Wanstrath - use will_paginate
 Henrik Nyh (DanceJam) - log exceptions in dev, linkable exceptions, parameter filtering etc
+Zhurbiy Oleg - Email notify by email, will_paginate fix
  
