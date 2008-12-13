@@ -10,6 +10,8 @@ class LoggedException < ActiveRecord::Base
         :message         => message,
         :backtrace       => exception.backtrace,
         :request         => controller.request
+      
+      LoggedExceptionsMailer.deliver_exception if LoggedExceptionsMailer.mailer_config[:deliver]
     end
     
     def find_exception_class_names
