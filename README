@@ -96,5 +96,5 @@ UPDATES
 
 Chris Wanstrath - use will_paginate
 Henrik Nyh (DanceJam) - log exceptions in dev, linkable exceptions, parameter filtering etc
-Zhurbiy Oleg - Email notify by email, will_paginate fix
+Zhurbiy Oleg - Exception notify by email, will_paginate fix
  
