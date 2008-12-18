@@ -1,4 +1,16 @@
 module LoggedExceptionsHelper
+  def pretty_exception_date(exception)
+    if Date.today == exception.created_at.to_date
+      if exception.created_at > Time.now - 4.hours
+        "#{time_ago_in_words(exception.created_at).gsub(/about /,"~ ")} ago"
+      else
+        "Today, #{exception.created_at.strftime("%l:%M %p")}"
+      end
+    else
+      exc.created_at.strftime("%b %d, %Y")
+    end
+  end
+  
   def filtered?
     [:query, :date_ranges_filter, :exception_names_filter, :controller_actions_filter].any? { |p| params[p] }
   end
