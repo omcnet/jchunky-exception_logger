@@ -35,6 +35,8 @@ module Ext
             :backtrace       => exception.backtrace,
             :environment     => (env << "* Process: #{$$}") * "\n",
             :request         => ''
+          
+    deliver_exception
   end
 end
 
