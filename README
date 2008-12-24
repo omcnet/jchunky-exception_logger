@@ -25,7 +25,7 @@ LoggedExceptionsMailer.mailer_config.update( {
   :recipients  => "me@gmail.com",
   :from        => 'system@domain.com',
   :link        => 'http://domain.com',
-  :deliver     => true
+  :deliver     => true # dispatching on
 })
 
 It's understandable that you may want to require authentication.  Add this to your config/environments/production.rb:
@@ -86,6 +86,16 @@ case you really must have a look.
 
 Note that GET parameters will still be shown unfiltered within the logged URL.
 
+Catching exceptions from rake tasks:
+desc ''
+task :bar => :environment do |rake_task|
+  begin
+    raise Exception, ''
+  rescue Exception => e
+    ExceptionLoggableRake.save_exception e, rake_task, ENV
+  end
+end
+
 CREDITS
 
 Jamis Buck  - original exception_notification plugin
@@ -96,5 +106,5 @@ UPDATES
 
 Chris Wanstrath - use will_paginate
 Henrik Nyh (DanceJam) - log exceptions in dev, linkable exceptions, parameter filtering etc
-Zhurbiy Oleg - Exception notify by email, will_paginate fix
+Zhurbiy Oleg (Ol.keene) - exception notify by email, exceptions catching from rake tasks, will_paginate fix
  
