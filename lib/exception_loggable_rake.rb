@@ -42,10 +42,11 @@ end
 
 class ExceptionLoggableRake
   class << self
-    def save_exception(e, action_name, env)
-      LoggedException.extend Ext
-#      в бд.окружение записывается не весь хеш..wtf? TODO
-      LoggedException.create_from_rake_exception(e, action_name, env)
+    def save_exception(e, rake_task, env)
+#     TODO envoronment not saving fully..wtf?
+      LoggedException.create_from_rake_exception(e, rake_task, env)
     end
   end
 end
+
+LoggedException.extend Ext
