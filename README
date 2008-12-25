@@ -92,7 +92,7 @@ task :bar => :environment do |rake_task|
   begin
     raise Exception, ''
   rescue Exception => e
-    ExceptionLoggableRake.save_exception e, rake_task, ENV
+    LoggedExceptionRake.save_exception e, rake_task, ENV
   end
 end
 
