@@ -9,35 +9,9 @@ class LoggedException < ActiveRecord::Base
     "#{self.exception_class} in #{self.controller_action}"
   end
   
-  class << self
-    def create_from_exception(controller, exception, data)
-      message = exception.message.inspect
-      message << "\n* Extra Data\n\n#{data}" unless data.blank?
-      create! \
-        :exception_class => exception.class.name,
-        :controller_name => controller.controller_name,
-        :action_name     => controller.action_name,
-        :message         => message,
-        :backtrace       => exception.backtrace,
-        :request         => controller.request
-    end
-    
-    def find_exception_class_names
-      connection.select_values "SELECT DISTINCT exception_class FROM #{table_name} ORDER BY exception_class"
-    end
-    
-    def find_exception_controllers_and_actions
-      find(:all, :select => "DISTINCT controller_name, action_name", :order => "controller_name, action_name").collect(&:controller_action)
-    end
-    
-    def host_name
-      `hostname -s`.chomp
-    end
-  end
-
-  def backtrace=(backtrace)
-    backtrace = sanitize_backtrace(backtrace) * "\n" unless backtrace.is_a?(String)
-    write_attribute :backtrace, backtrace
+  def backtrace=(trace)
+    trace = sanitize_backtrace(trace) * "\n" unless trace.is_a?(String)
+    self.backtrace = trace
   end
 
   def request=(request)
@@ -63,6 +37,30 @@ class LoggedException < ActiveRecord::Base
     @controller_action ||= "#{controller_name.camelcase}/#{action_name}"
   end
 
+  def self.class_names
+    connection.select_values "SELECT DISTINCT exception_class FROM #{LoggedException.quoted_table_name} ORDER BY exception_class"
+  end
+  
+  def self.controller_actions
+    self.all(:select => "DISTINCT controller_name, action_name", :order => "controller_name, action_name").collect(&:controller_action)
+  end
+  
+  def self.create_from_exception(controller, exception, data)
+    message = exception.message.inspect
+    message << "\n* Extra Data\n\n#{data}" unless data.blank?
+    create! \
+      :exception_class => exception.class.name,
+      :controller_name => controller.controller_name,
+      :action_name     => controller.action_name,
+      :message         => message,
+      :backtrace       => exception.backtrace,
+      :request         => controller.request
+  end
+  
+  def self.host_name
+    `hostname -s`.chomp
+  end
+  
   private
     @@rails_root      = Pathname.new(RAILS_ROOT).cleanpath.to_s
     @@backtrace_regex = /^#{Regexp.escape(@@rails_root)}/
