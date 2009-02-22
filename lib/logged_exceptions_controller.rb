@@ -3,8 +3,8 @@ class LoggedExceptionsController < ActionController::Base
   layout nil
 
   def index
-    @exception_names    = LoggedException.find_exception_class_names
-    @controller_actions = LoggedException.find_exception_controllers_and_actions
+    @exception_names    = LoggedException.class_names
+    @controller_actions = LoggedException.controller_actions
     query
   end
 
@@ -13,7 +13,7 @@ class LoggedExceptionsController < ActionController::Base
     scope = scope.search(params[:query]) unless params[:query].blank?
     scope = scope.days_old(params[:date_ranges_filter]) unless params[:date_ranges_filter].blank?
     scope = scope.by_exception_class(params[:exception_names_filter]) unless params[:exception_names_filter].blank?
-    scope = scope.by_controller_and_action(params[:controller_actions_filter].split('/').collect(&:downcase)) unless params[:controller_actions_filter].blank?
+    scope = scope.by_controller_and_action(*params[:controller_actions_filter].split('/').collect(&:downcase)) unless params[:controller_actions_filter].blank?
     scope = scope.sorted
     
     params[:limit] ||= 25
@@ -44,7 +44,7 @@ class LoggedExceptionsController < ActionController::Base
   end
   
   def destroy
-    LoggedException.destroy params[:id]
+    @exception = LoggedException.destroy params[:id]
   end
   
   def destroy_all

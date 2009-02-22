@@ -1,6 +1,6 @@
 class LoggedException < ActiveRecord::Base
-  named_scope :by_exception_class, lambda {|exception_class| {:conditions => ["#{LoggedException.quoted_table_name}.exception_class = ?", exception_class]}
-  named_scope :by_controller_and_action, lambda {|controller, action| {:conditions => ["#{LoggedException.quoted_table_name}.controller_name = ? AND #{LoggedException.quoted_table_name}.action_name = ?", controller_name, action_name]}}
+  named_scope :by_exception_class, lambda {|exception_class| {:conditions => ["#{LoggedException.quoted_table_name}.exception_class = ?", exception_class]}}
+  named_scope :by_controller_and_action, lambda {|controller_name, action_name| {:conditions => ["#{LoggedException.quoted_table_name}.controller_name = ? AND #{LoggedException.quoted_table_name}.action_name = ?", controller_name, action_name]}}
   named_scope :search, lambda {|query| {:conditions => ["#{LoggedException.quoted_table_name}.message LIKE ?", "%#{query}%"]}}
   named_scope :days_old, lambda {|day_number| {:conditions => ["#{LoggedException.quoted_table_name}.created_at >= ?", day_number.to_f.days.ago.utc]}}
   named_scope :sorted, {:order => "#{LoggedException.quoted_table_name}.created_at DESC"}

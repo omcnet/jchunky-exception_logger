@@ -7,7 +7,7 @@ module LoggedExceptionsHelper
         "Today, #{exception.created_at.strftime("%l:%M %p")}"
       end
     else
-      exc.created_at.strftime("%b %d, %Y")
+      exception.created_at.strftime("%b %d, %Y")
     end
   end
   
