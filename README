@@ -19,7 +19,7 @@ Next, you'll need to include the ExceptionLoggable module into ApplicationContro
 
 Now add a new route to your routes.rb:
 
-  map.connect "logged_exceptions/:action/:id", :controller => "logged_exceptions"
+  map.resources :logged_exceptions, :collection => {:query => :any, :destroy_all => [:post, :put, :delete], :destroy => [:post, :put, :delete]}, :member => {:show => :any}
 
 After that, visit /logged_exceptions in your application to manage the exceptions.
 
