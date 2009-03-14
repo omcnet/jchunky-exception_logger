@@ -11,7 +11,7 @@ class LoggedException < ActiveRecord::Base
   
   def backtrace=(trace)
     trace = sanitize_backtrace(trace) * "\n" unless trace.is_a?(String)
-    self.backtrace = trace
+    write_attribute :backtrace, trace
   end
 
   def request=(request)
