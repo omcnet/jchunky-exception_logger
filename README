@@ -21,6 +21,10 @@ Now add a new route to your routes.rb:
 
   map.connect "logged_exceptions/:action/:id", :controller => "logged_exceptions"
 
+If you want the RSS Feed mapping, add this right after:
+
+  map.connect "logged_exceptions/:action.:format", :controller => "logged_exceptions"
+
 After that, visit /logged_exceptions in your application to manage the exceptions.
 
 Once you have done that, open up the vendor/plugins/init.rb file and choose your pagination,
