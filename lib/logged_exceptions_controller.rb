@@ -1,4 +1,5 @@
 class LoggedExceptionsController < ActionController::Base
+<<<<<<< HEAD:lib/logged_exceptions_controller.rb
   cattr_accessor :application_name
   layout nil
 
@@ -67,3 +68,7 @@ class LoggedExceptionsController < ActionController::Base
       return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
     end
 end
+=======
+  include ExceptionLoggableControllerMixin
+end
+>>>>>>> 4828f97a6385637675381a324c07f221074c81ce:lib/logged_exceptions_controller.rb
