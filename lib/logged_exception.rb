@@ -3,7 +3,7 @@ class LoggedException < ActiveRecord::Base
     def create_from_exception(controller, exception, data)
       message = exception.message.inspect
       message << "\n* Extra Data\n\n#{data}" unless data.blank?
-      create! \
+      e = create! \
         :exception_class => exception.class.name,
         :controller_name => controller.controller_path,
         :action_name     => controller.action_name,
@@ -11,11 +11,11 @@ class LoggedException < ActiveRecord::Base
         :backtrace       => exception.backtrace,
         :request         => controller.request
       
-        deliver_exception
+      deliver_exception(e)
     end
     
-    def deliver_exception
-      LoggedExceptionsMailer.deliver_exception if LoggedExceptionsMailer.mailer_config[:deliver]
+    def deliver_exception(e)
+      LoggedExceptionsMailer.deliver_exception(e) if LoggedExceptionsMailer.mailer_config[:deliver]
     end
     
     def find_exception_class_names

@@ -8,12 +8,15 @@ class LoggedExceptionsMailer < ActionMailer::Base
                     :link        => ''
                   }
 
-  def exception
+  def exception(e)
     @subject      = mailer_config[:subject]
     @recipients   = mailer_config[:recipients]
     @from         = mailer_config[:from]
     @sent_on      = Time.now
     @content_type = "text/html"
-    @body[:link]  = mailer_config[:link]
+    @body = {
+      :link => mailer_config[:link],
+      :e => e
+    }
   end
 end

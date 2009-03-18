@@ -29,7 +29,7 @@ class LoggedExceptionRake
         env << '* ' + ("%-*s: %s" % [max.length, key, environment[key].to_s.strip])
       end
 
-      create! :exception_class => exception.class.name,
+      e = create! :exception_class => exception.class.name,
               :controller_name => 'RakeTask',
               :action_name     => rake_task.name,
               :message         => message,
@@ -37,7 +37,7 @@ class LoggedExceptionRake
               :environment     => (env << "* Process: #{$$}") * "\n",
               :request         => ''
 
-      deliver_exception
+      deliver_exception(e)
     end
   end
   
