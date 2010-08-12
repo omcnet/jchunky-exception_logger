@@ -1,7 +1,7 @@
 <div id="exceptions">
   <div class="pages">
     <%= link_to_remote "Delete Visible", :url => { :action => "destroy_all" }, :with => "ExceptionLogger.deleteAll()" %>
-    <%= pagination_remote_links exceptions %>
+    <%= pagination_remote_links @exceptions %>
   </div>
   <h1>Exceptions <%= "<span>(filtered)</span>" if filtered? %> </h1>
   <table cellspacing="0">
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% exceptions.each do |exception| %>
+      <% @exceptions.each do |exception| %>
         <tr id="<%= dom_id(exception) %>" class="<%= cycle("eor", "") %> exception">
           <td>
             <div class="expclass"><%= link_to_remote exception.name, :url => {:action=>:show,:id=>exception.id} %></div>
@@ -26,6 +26,6 @@
     </tbody>
   </table>
   <div class="pages pages-bottom">
-    <%= pagination_remote_links exceptions %>
+    <%= pagination_remote_links @exceptions %>
   </div>
 </div> <!-- #exceptions -->
