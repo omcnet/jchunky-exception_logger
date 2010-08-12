@@ -1,0 +1,18 @@
+<div class="tools">
+  <% # = #link_to_remote "Delete", :url => exception, :method => :delete, :class => "util" %>
+  <span class="pipe">|</span>
+  <%= link_to_function "Close", "$('showpage').style.display='none';", :class => "util" %>
+</div>
+<div class="date">
+  <%= exception.created_at.strftime("%A, %b %d, %Y at %l:%M %p") %>
+</div>
+<h1><%= exception.name %></h1>
+<h2>Request</h2>
+<%= textilize(exception.request) %>
+<h2>Backtrace</h2>
+<%= simple_format exception.message %>
+<div id="backtrace">
+  <%= exception.backtrace.gsub(/\n/,"<br />") %>
+</div>
+<h2>Environment</h2>
+<%= textilize(exception.environment) %>

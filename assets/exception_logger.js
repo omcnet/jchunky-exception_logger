@@ -6,7 +6,7 @@ ExceptionLogger = {
   },
   
   setFilter: function(context, name) {
-    var filterName = context + '_filter'
+    var filterName = context + '_filter';
     $(filterName).value = ($F(filterName) == name) ? '' : name;
     this.deselect(context, filterName);
     $('page').value = '1';
@@ -56,7 +56,7 @@ Event.observe(window, 'load', function() {
 
 Object.extend(Array.prototype, {
   toQueryString: function(name) {
-    return this.collect(function(item) { return name + "[]=" + encodeURIComponent(item) }).join('&');
+    return this.collect(function(item) { return name + "[]=" + encodeURIComponent(item); }).join('&');
   }
 });
 

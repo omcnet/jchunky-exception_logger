@@ -15,6 +15,7 @@ class LoggedException < ActiveRecord::Base
     end
     
     def deliver_exception(e)
+      puts LoggedExceptionsMailer.mailer_config
       LoggedExceptionsMailer.deliver_exception(e) if LoggedExceptionsMailer.mailer_config[:deliver]
     end
     
@@ -31,9 +32,19 @@ class LoggedException < ActiveRecord::Base
     end
   end
 
-  def backtrace=(backtrace)
-    backtrace = sanitize_backtrace(backtrace) * "\n" unless backtrace.is_a?(String)
-    write_attribute :backtrace, backtrace
+  named_scope :by_exception_class, lambda {|exception_class| {:conditions => ["#{LoggedException.quoted_table_name}.exception_class = ?", exception_class]}}
+  named_scope :by_controller_and_action, lambda {|controller_name, action_name| {:conditions => ["#{LoggedException.quoted_table_name}.controller_name = ? AND #{LoggedException.quoted_table_name}.action_name = ?", controller_name, action_name]}}
+  named_scope :search, lambda {|query| {:conditions => ["#{LoggedException.quoted_table_name}.message LIKE ?", "%#{query}%"]}}
+  named_scope :days_old, lambda {|day_number| {:conditions => ["#{LoggedException.quoted_table_name}.created_at >= ?", day_number.to_f.days.ago.utc]}}
+  named_scope :sorted, {:order => "#{LoggedException.quoted_table_name}.created_at DESC"}
+  
+  def name
+    "#{self.exception_class} in #{self.controller_action}"
+  end
+  
+  def backtrace=(trace)
+    trace = sanitize_backtrace(trace) * "\n" unless trace.is_a?(String)
+    write_attribute :backtrace, trace
   end
 
   def request=(request)
@@ -59,6 +70,15 @@ class LoggedException < ActiveRecord::Base
     @controller_action ||= "#{controller_name.camelcase}/#{action_name}"
   end
 
+  def self.class_names
+    connection.select_values "SELECT DISTINCT exception_class FROM #{LoggedException.quoted_table_name} ORDER BY exception_class"
+  end
+  
+  def self.controller_actions
+    self.all(:select => "DISTINCT controller_name, action_name", :order => "controller_name, action_name").collect(&:controller_action)
+  end
+  
+  
   private
     @@rails_root      = Pathname.new(RAILS_ROOT).cleanpath.to_s
     @@backtrace_regex = /^#{Regexp.escape(@@rails_root)}/
