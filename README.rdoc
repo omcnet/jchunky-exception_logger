@@ -1,5 +1,12 @@
 = Exception Logger for Rails3
 
+You liked the exception logger from http://github.com/defunkt/exception_logger for Rails2?
+You want to have the same functionallity using Rails3?
+You want to upgrade your Rails2 application and the old plugin breaks?
+You ...
+
+Then just use the exception_logger gem instead and tell your friends to do the same ;)
+
 == Install
 
 Inside your Gemfile:
@@ -13,15 +20,18 @@ Inside your ApplicationController
 
 == Database Setup
 
-Currently the generate is not ready to use.
-
 Use
 
   rails g exception_migration
 
-This will create a database migration TIMESTAMP_add_exception_table.rb inside db/migrations
+This will create a database migration
+
+  TIMESTAMP_add_exception_table.rb
+
+inside db/migrations
 
 == Routing
+
 The gem is preconfigured to extend your routes automatically. You can access the logged exceptions by pointing to "/logged_exceptions" inside your application.
 
 You can use the rake tasks
@@ -49,6 +59,19 @@ in config/environment/production.rb:
     end
   end
 
+and (if you use declarative_authorization) add this to your authorization_rules.rb file:
+
+  role :admin do
+    has_permission_on :logged_exceptions, :to => :manage
+
+
+== Upgrading from the old plugin
+
+If you have used the exception_logger plugin for your rails2 application and want to migrate to rails 3 then:
+
+* Remove the old plugin (just delete the vendor/plugins/exception_logger folder)
+* Install the new gem version (see Install)
+* DONE. (if I forgot something, then let me know.)
 
 == Legacy
 
