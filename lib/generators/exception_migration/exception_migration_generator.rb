@@ -6,6 +6,12 @@ class ExceptionMigrationGenerator < Rails::Generators::Base
   include Rails::Generators::Migration
   source_root File.join(File.dirname(__FILE__), 'templates')
 
+  class_option :exception_table_name,
+    :type => :string,
+    :desc => "Name for the Exception Table",
+    :required => false,
+    :default => "logged_exceptions"
+
   def initialize(args = [], options = {}, config = {})
     super
   end
