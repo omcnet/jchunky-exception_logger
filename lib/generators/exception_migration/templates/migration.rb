@@ -1,6 +1,6 @@
 class AddLoggedExceptionTable < ActiveRecord::Migration
   def self.up
-    create_table "logged_exceptions", :force => true do |t|
+    create_table "<%= options[:exception_table_name] %>", :force => true do |t|
       t.string :exception_class
       t.string :controller_name
       t.string :action_name
@@ -13,6 +13,6 @@ class AddLoggedExceptionTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table "logged_exceptions"
+    drop_table "<%= options[:exception_table_name] %>"
   end
 end

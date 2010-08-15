@@ -10,7 +10,7 @@ module ExceptionLogger
       app.middleware.use ::ActionDispatch::Static, "#{root}/public"
     end
     rake_tasks do
-      load "exception_logger/railties/tasks.rake"
+      load File.expand_path(File.dirname(__FILE__) + '/../railties/tasks.rake')
     end
 
   end
