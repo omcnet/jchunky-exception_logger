@@ -28,7 +28,7 @@ module LoggedExceptionsHelper
     content_tag(:ul, list_items)
   end
 
-  class PaginationRenderer < WillPaginate::LinkRenderer
+  class PaginationRenderer < WillPaginate::ViewHelpers::LinkRenderer
     def page_link_or_span(page, span_class = 'current', text = nil)
       text ||= page.to_s
       if page and page != current_page
