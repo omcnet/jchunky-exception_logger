@@ -48,10 +48,6 @@ class LoggedExceptionsController < ApplicationController
 
   def show
     @exception = LoggedException.find params[:id]
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def destroy
