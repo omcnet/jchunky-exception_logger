@@ -1,11 +1,18 @@
 = Exception Logger for Rails3
 
 You liked the exception logger from http://github.com/defunkt/exception_logger for Rails2?
+
 You want to have the same functionallity using Rails3?
+
 You want to upgrade your Rails2 application and the old plugin breaks?
+
 You ...
 
 Then just use the exception_logger gem instead and tell your friends to do the same ;)
+
+== Hosted on RubyGems.org
+
+This gem is hosted on RubyGems.org: http://rubygems.org/gems/exception_logger
 
 == Install
 
