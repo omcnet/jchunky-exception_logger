@@ -55,7 +55,7 @@ in config/environment/production.rb:
       filter_resource_access
       # just add any code you want to be included in the controller ;)
       # optional, sets the application name for the rss feeds
-      self.application_name = "AlaskaTravelAgency"
+      self.application_name = "Your Application Name"
     end
   end
 
