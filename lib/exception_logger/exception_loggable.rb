@@ -60,6 +60,12 @@ module ExceptionLogger
       !self.class.local_addresses.detect { |addr| addr.include?(remote) }.nil?
     end
 
+    # we log the exception and raise it again, for the normal handling.
+    def log_exception_handler(exception)
+      log_exception(exception)
+      raise exception
+    end
+
     def rescue_action(exception)
       status = response_code_for_rescue(exception)
       log_exception(exception) if status != :not_found
