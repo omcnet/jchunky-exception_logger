@@ -18,7 +18,7 @@
       <% @exceptions.each do |exception| %>
         <tr id="<%= dom_id(exception) %>" class="<%= cycle("eor", "") %> exception">
           <td>
-            <div class="expclass"><%= link_to "#{exception.exception_class} in #{exception.controller_action}", {:action => "show", :id => exception}, :remote => true %></div>
+            <div class="expclass"><%= link_to exception.name, {:action => "show", :id => exception}, :remote => true %></div>
             <span class="message"><%= h exception.message %></span>
           </td>
           <td class="time"><%= pretty_exception_date(exception) %></td>
