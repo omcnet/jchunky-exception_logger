@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/QuBiT/exception_logger"
     gem.authors = ["Roland Guem"]
     gem.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"]
+    gem.add_dependency "rails", ">= 3.0.0.rc"
     gem.add_dependency "will_paginate", ">= 3.0.pre2"
     gem.add_dependency "i18n"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
