@@ -22,9 +22,13 @@ Use
 This will create a database migration TIMESTAMP_add_exception_table.rb inside db/migrations
 
 == Routing
-The gem is preconfigured to extend your rotes automatically.
+The gem is preconfigured to extend your routes automatically. You can access the logged exceptions by pointing to "/logged_exceptions" inside your application.
 
-To see if it is correctly installed use "rake routes"
+You can use the rake tasks
+
+  rake routes
+
+to see and check the routes.
 
 == Authentication
 
