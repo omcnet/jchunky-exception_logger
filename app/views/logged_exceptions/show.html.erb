@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=t(".title")%></title>
+    <meta charset="UTF-8" />
+    <%= javascript_include_tag :defaults, 'exception_logger.js' %>
+    <%= stylesheet_link_tag 'exception_logger'  %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
+    <div id="container">
+      <div id="right">
+      </div> <!-- right -->
+      <div id="left">
+        <div class="page" id="showpage">
+          <%= render :partial => "show" %>
+        </div>
+      </div>
+    </div> <!-- container -->
+    <br style="clear:both" />
+  </body>
+</html>
