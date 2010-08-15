@@ -80,7 +80,7 @@ class LoggedException < ActiveRecord::Base
   
   
   private
-    @@rails_root      = Pathname.new(RAILS_ROOT).cleanpath.to_s
+    @@rails_root      = Pathname.new(Rails.root).cleanpath.to_s
     @@backtrace_regex = /^#{Regexp.escape(@@rails_root)}/
 
     def sanitize_backtrace(trace)
