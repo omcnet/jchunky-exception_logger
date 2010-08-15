@@ -32,11 +32,11 @@ class LoggedException < ActiveRecord::Base
     end
   end
 
-  named_scope :by_exception_class, lambda {|exception_class| {:conditions => ["#{LoggedException.quoted_table_name}.exception_class = ?", exception_class]}}
-  named_scope :by_controller_and_action, lambda {|controller_name, action_name| {:conditions => ["#{LoggedException.quoted_table_name}.controller_name = ? AND #{LoggedException.quoted_table_name}.action_name = ?", controller_name, action_name]}}
-  named_scope :search, lambda {|query| {:conditions => ["#{LoggedException.quoted_table_name}.message LIKE ?", "%#{query}%"]}}
-  named_scope :days_old, lambda {|day_number| {:conditions => ["#{LoggedException.quoted_table_name}.created_at >= ?", day_number.to_f.days.ago.utc]}}
-  named_scope :sorted, {:order => "#{LoggedException.quoted_table_name}.created_at DESC"}
+  scope :by_exception_class, lambda {|exception_class| where(:exception_class => exception_class)}
+  scope :by_controller_and_action, lambda {|controller_name, action_name| where(:controller_name => controller_name, :action_name => action_name)}
+  scope :search, lambda {|query|  where(:message.matches => "%#{query}%")}
+  scope :days_old, lambda {|day_number| where(:created_at.gteq => day_number.to_f.days.ago.utc)}
+  scope :sorted, order("created_at DESC")
   
   def name
     "#{self.exception_class} in #{self.controller_action}"
