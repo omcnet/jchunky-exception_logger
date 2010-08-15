@@ -305,3 +305,26 @@ ul.tabs li.selected a
 #feed {
   margin-top: 15px;
 }
+
+/* html5 changes */
+
+#exceptions table {
+  border-collapse: collapse;
+}
+
+#exceptions table thead {
+  display: none;
+}
+
+#exceptions table tbody tr.exception td.time {
+  white-space: nowrap
+}
+
+#container #activity {
+  display:none;
+}
+
+#container #left #showpage {
+  display:none;
+  margin-bottom:1em;
+}
