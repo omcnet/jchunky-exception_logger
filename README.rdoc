@@ -1,6 +1,44 @@
 = Exception Logger for Rails3
 
-For more details read the README.old File (old plugin).
+== Install
+
+Inside your Gemfile:
+
+  gem "exception_logger", :require => "exception_logger"
+
+Inside your ApplicationController
+
+  include ExceptionLogger::ExceptionLoggable # loades the module
+  rescue_from Exception, :with => :log_exception_handler # tells rails to forward the 'Exception' (you can change the type) to the handler of the module
+
+== Routing
+The gem is preconfigured to extend your rotes automatically.
+
+To see if it is correctly installed use "rake routes"
+
+== Authentication
+
+If you want, and believe me you want that, you can add the following lines to your environment to enable Authentication
+
+Example uses the declarative_authorization gem
+
+in config/environment/production.rb:
+
+  config.after_initialize do
+    LoggedExceptionsController.class_eval do
+      # include any custom auth modules you need
+      # (declarative authorization gem used)
+      filter_resource_access
+      # just add any code you want to be included in the controller ;)
+      # optional, sets the application name for the rss feeds
+      self.application_name = "AlaskaTravelAgency"
+    end
+  end
+
+
+== Legacy
+
+For more and older details read the README.old File (old plugin).
 
 == Note on Patches/Pull Requests
  
