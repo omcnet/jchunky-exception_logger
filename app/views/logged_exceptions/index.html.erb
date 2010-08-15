@@ -17,21 +17,21 @@
         <h4><%=t(".exception")%></h4>
         <ul id="exception_names" class="filters">
           <% @exception_names.each do |name| %>
-            <li><%= link_to name, "#", :onclick => "ExceptionLogger.setFilter('exception_names','#{escape_javascript name}')" %></li>
+            <li><%= link_to name, {:action => 'index', :exception_names_filter => "#{name}"}, :onclick => "ExceptionLogger.setFilter('exception_names','#{escape_javascript name}'); return false;" %></li>
           <% end %>
         </ul>
         <h4><%=t(".controller_action")%></h4>
         <ul id="controller_actions" class="filters">
           <% @controller_actions.each do |action| %>
-            <li><%= link_to action, "#", :onclick => "ExceptionLogger.setFilter('controller_actions','#{escape_javascript action}')" %></li>
+            <li><%= link_to action, {:action => 'index', :controller_actions_filter => "#{action}"}, :onclick => "ExceptionLogger.setFilter('controller_actions','#{escape_javascript action}'); return false;" %></li>
           <% end %>
         </ul>
         <h4><%=t(".dates")%></h4>
         <ul id="date_ranges" class="filters">
-          <li><%= link_to t(".today"), "#", :onclick => "ExceptionLogger.setFilter('date_ranges', 1)", :title => "1" %></li>
-          <li><%= link_to t(".last_few_days"), "#", :onclick => "ExceptionLogger.setFilter('date_ranges', 3)", :title => "3" %></li>
-          <li><%= link_to t(".last_7_days"), "#", :onclick => "ExceptionLogger.setFilter('date_ranges', 7)", :title => "7" %></li>
-          <li><%= link_to t(".last_30_days"), "#", :onclick => "ExceptionLogger.setFilter('date_ranges', 30)", :title => "30" %></li>
+          <li><%= link_to t(".today"), {:action => 'index', :data_ranges_filter => "1"}, :onclick => "ExceptionLogger.setFilter('date_ranges', 1); return false;", :title => "1" %></li>
+          <li><%= link_to t(".last_few_days"), {:action => 'index', :data_ranges_filter => "3"}, :onclick => "ExceptionLogger.setFilter('date_ranges', 3); return false;", :title => "3" %></li>
+          <li><%= link_to t(".last_7_days"), {:action => 'index', :data_ranges_filter => "7"}, :onclick => "ExceptionLogger.setFilter('date_ranges', 7); return false;", :title => "7" %></li>
+          <li><%= link_to t(".last_30_days"), {:action => 'index', :data_ranges_filter => "30"}, :onclick => "ExceptionLogger.setFilter('date_ranges', 30); return false;", :title => "30" %></li>
         </ul>
         <div id="search">
           <%= form_tag "logged_exceptions/query",:remote => true, :id => 'query-form' %>

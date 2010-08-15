@@ -1,11 +1,11 @@
 <div class="tools">
   <%= link_to 'Delete', { :action => 'destroy', :id => @exception }, :method => :delete, :remote => :true, :class => "util" %>
   <span class="pipe">|</span>
-  <%= link_to "Close", "#", :onclick => "$('showpage').style.display='none';", :class => "util" %>
+  <%= link_to "Close", logged_exceptions_url, :remote => true, :onclick => "$('showpage').style.display='none'; return false;", :class => "util" %>
 </div>
 
 <div class="date">
-  <%= @exception.created_at.strftime("%A, %b %d, %Y at %l:%M %p") %>
+  <%= @exception.created_at.strftime(Time::DATE_FORMATS[:exc_full]) %>
 </div>
 <h1><%= @exception.name %></h1>
 

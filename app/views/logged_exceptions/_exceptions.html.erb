@@ -5,7 +5,7 @@
       :: Pages: <strong><%= pagination_remote_links @exceptions %></strong>
     <% end %>
   </div>
-  <h1>Exceptions <%= "<span>(filtered)</span>" if filtered? %> </h1>
+  <h1>Exceptions <%= raw "<span>(filtered)</span>" if filtered? %> </h1>
   <table>
     <thead>
       <tr>
