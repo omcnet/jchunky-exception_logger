@@ -2,15 +2,19 @@ ExceptionLogger = {
   filters: ['exception_names', 'controller_actions', 'date_ranges'],
   setPage: function(num) {
     $('page').value = num;
-    $('query-form').onsubmit();
+    //$('query-form').onsubmit();
+    new Ajax.Request('/logged_exceptions/query', {asynchronous:true, evalScripts:true, parameters:Form.serialize('query-form')});
+    return false;
   },
-  
+
   setFilter: function(context, name) {
-    var filterName = context + '_filter';
+    var filterName = context + '_filter'
     $(filterName).value = ($F(filterName) == name) ? '' : name;
     this.deselect(context, filterName);
     $('page').value = '1';
-    $('query-form').onsubmit();
+    //$('query-form').onsubmit();
+    new Ajax.Request('/logged_exceptions/query', {asynchronous:true, evalScripts:true, parameters:Form.serialize('query-form')});
+    return false;
   },
 
   deselect: function(context, filterName) {
