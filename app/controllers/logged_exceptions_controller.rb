@@ -1,7 +1,11 @@
-class LoggedExceptionsController <  ApplicationController
+class LoggedExceptionsController < ApplicationController
 
   cattr_accessor :application_name
   layout nil
+
+  #ApplicationController.class_eval do
+  #  rescue_from Exception, :with => :log_exception_handler
+  #end
 
   def index
     @exception_names    = LoggedException.find_exception_class_names
@@ -44,9 +48,6 @@ class LoggedExceptionsController <  ApplicationController
 
   def show
     @exception = LoggedException.find params[:id]
-    respond_to do |format|
-      format.js
-    end
   end
 
   def destroy
