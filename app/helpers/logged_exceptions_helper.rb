@@ -4,10 +4,10 @@ module LoggedExceptionsHelper
       if exception.created_at > Time.now - 4.hours
         "#{time_ago_in_words(exception.created_at).gsub(/about /,"~ ")} ago"
       else
-        "Today, #{exception.created_at.strftime("%l:%M %p")}"
+        "Today, #{exception.created_at.strftime(Time::DATE_FORMATS[:exc_time])}"
       end
     else
-      exception.created_at.strftime("%b %d, %Y")
+      exception.created_at.strftime(Time::DATE_FORMATS[:exc_date])
     end
   end
   
@@ -18,9 +18,9 @@ module LoggedExceptionsHelper
   def pagination_remote_links(collection)
     will_paginate collection, 
       :renderer   => 'LoggedExceptionsHelper::PaginationRenderer',
-      :previous_label => '',
-      :next_label => '',
-      :container  => false
+      #:previous_label => '',
+    #:next_label => '',
+    :container  => false
   end
   
   def listify(text)
@@ -28,14 +28,24 @@ module LoggedExceptionsHelper
     content_tag(:ul, list_items)
   end
 
+  # http://github.com/mislav/will_paginate/blob/rails3/lib/will_paginate/view_helpers/link_renderer.rb
   class PaginationRenderer < WillPaginate::ViewHelpers::LinkRenderer
-    def page_link_or_span(page, span_class = 'current', text = nil)
-      text ||= page.to_s
-      if page and page != current_page
-        @template.link_to_function text, "ExceptionLogger.setPage(#{page})"
+
+    def page_number(page)
+      unless page == current_page
+        link(page, page, :data_remote => true, :onclick => "ExceptionLogger.setPage(#{page});return false;", :rel => rel_value(page))
       else
-        @template.content_tag :span, text, :class => span_class
+        tag(:em, page)
       end
     end
+
+    def previous_or_next_page(page, text, classname)
+      if page
+        link(text, page, :data_remote => true, :onclick => "ExceptionLogger.setPage(#{page});return false;", :class => classname)
+      else
+        tag(:span, text, :class => classname + ' disabled')
+      end
+    end
+
   end
 end
