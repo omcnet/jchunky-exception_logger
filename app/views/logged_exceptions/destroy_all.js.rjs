@@ -1,2 +1,2 @@
-page[:exceptions].replace :partial => "exceptions", :locals => {:exceptions => @exceptions}
+page[:exceptions].replace :partial => "exceptions"
 page[:showpage].hide
