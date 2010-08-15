@@ -9,5 +9,9 @@ module ExceptionLogger
     initializer "static assets" do |app|
       app.middleware.use ::ActionDispatch::Static, "#{root}/public"
     end
+    rake_tasks do
+      load "exception_logger/railties/tasks.rake"
+    end
+
   end
 end
