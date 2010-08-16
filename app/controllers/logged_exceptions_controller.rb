@@ -13,31 +13,27 @@ class LoggedExceptionsController < ApplicationController
     query
   end
 
+
   def query
-    conditions = []
-    parameters = []
+    exceptions = LoggedException.sorted
     unless params[:id].blank?
-      conditions << 'id = ?'
-      parameters << params[:id]
+      exceptions = exceptions.where(:id => params[:id])
     end
     unless params[:query].blank?
-      conditions << 'message LIKE ?'
-      parameters << "%#{params[:query]}%"
+      exceptions = exceptions.message_like(params[:query])
     end
     unless params[:date_ranges_filter].blank?
-      conditions << 'created_at >= ?'
-      parameters << params[:date_ranges_filter].to_f.days.ago.utc
+      exceptions = exceptions.days_old(params[:date_ranges_filter])
     end
     unless params[:exception_names_filter].blank?
-      conditions << 'exception_class = ?'
-      parameters << params[:exception_names_filter]
+      exceptions = exceptions.by_exception_class(params[:exception_names_filter])
     end
     unless params[:controller_actions_filter].blank?
-      conditions << 'controller_name = ? AND action_name = ?'
-      parameters += params[:controller_actions_filter].split('/').collect(&:downcase)
+      c_a_params = params[:controller_actions_filter].split('/').collect(&:downcase)
+      exceptions = exceptions.by_controller(c_a_params.first)
+      exceptions = exceptions.by_action(c_a_params.last)
     end
-    @exceptions = LoggedException.paginate :order => 'created_at desc', :per_page => 30,
-      :conditions => conditions.empty? ? nil : parameters.unshift(conditions * ' and '), :page => params[:page]
+    @exceptions = exceptions.paginate(:per_page => 30, :page => params[:page])
 
     respond_to do |format|
       format.html { redirect_to :action => 'index' unless action_name == 'index' }
@@ -56,7 +52,8 @@ class LoggedExceptionsController < ApplicationController
   end
 
   def destroy_all
-    LoggedException.delete_all ['id in (?)', params[:ids]] unless params[:ids].blank?
+    debugger;
+    LoggedException.delete_all(:id => params[:ids]) unless params[:ids].blank?
     query
   end
 
