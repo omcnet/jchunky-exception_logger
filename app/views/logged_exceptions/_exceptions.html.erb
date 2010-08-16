@@ -1,6 +1,6 @@
 <div id="exceptions">
   <div class="pages">
-    <%= link_to 'Delete Visible', { :action => 'destroy_all' },:method => :delete, :remote => true, :onclick => "ExceptionLogger.deleteAll()" %>
+    <%= link_to 'Delete Visible', { :action => 'destroy_all' }, :method => :post, :remote => true, :onclick => "ExceptionLogger.deleteAllRequest()" %>
     <% if @exceptions.total_pages > 1 %>
       :: Pages: <strong><%= pagination_remote_links @exceptions %></strong>
     <% end %>

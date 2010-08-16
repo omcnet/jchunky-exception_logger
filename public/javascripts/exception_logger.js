@@ -23,9 +23,14 @@ ExceptionLogger = {
       a.className = (value && (a.getAttribute('title') == value || a.innerHTML == value)) ? 'selected' : '';
     });
   },
+
+  deleteAllRequest: function() {
+      new Ajax.Request('/logged_exceptions/destroy_all', {asynchronous:true, evalScripts:true, parameters:ExceptionLogger.deleteAll()});
+      return false;
+  },
   
   deleteAll: function() {
-    return Form.serialize('query-form') + '&' + $$('tr.exception').collect(function(tr) { return tr.getAttribute('id').gsub(/^\w+-/, ''); }).toQueryString('ids');
+    return Form.serialize('query-form') + '&' + $$('tr.exception').collect(function(tr) { return tr.getAttribute('id').gsub(/^\w+_/, ''); }).toQueryString('ids');
   },
   
   // If the user visits /logged_exceptions#e123, show exception with id 123
