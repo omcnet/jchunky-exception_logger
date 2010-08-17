@@ -10,14 +10,14 @@
 <h1><%= @exception.name %></h1>
 
 <h2>Request</h2>
-<%= raw textilize(@exception.request) %>
+<%= pretty_format(@exception.request) %>
 
 <h2>Backtrace</h2>
-<%= raw simple_format @exception.message %>
+<%= simple_format @exception.message %>
 
 <div id="backtrace">
   <%= raw @exception.backtrace.gsub(/\n/,"<br />") %>
 </div>
 
 <h2>Environment</h2>
-<%= raw textilize(@exception.environment) %>
+<%= pretty_format(@exception.environment) %>

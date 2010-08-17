@@ -37,6 +37,15 @@ module LoggedExceptionsHelper
     content_for(:title, title.to_s)
   end
 
+  # Rescue textilize call if RedCloth is not available.
+  def pretty_format(text)
+    begin
+      textilize(text).html_safe
+    rescue
+      simple_format(text).html_safe
+    end
+  end
+
   # http://github.com/mislav/will_paginate/blob/rails3/lib/will_paginate/view_helpers/link_renderer.rb
   class PaginationRenderer < WillPaginate::ViewHelpers::LinkRenderer
 
