@@ -19,14 +19,6 @@ class LoggedException < ActiveRecord::Base
       LoggedExceptionsMailer.deliver_exception(e) if LoggedExceptionsMailer.mailer_config[:deliver]
     end
     
-    def find_exception_class_names
-      connection.select_values "SELECT DISTINCT exception_class FROM #{table_name} ORDER BY exception_class"
-    end
-    
-    def find_exception_controllers_and_actions
-      find(:all, :select => "DISTINCT controller_name, action_name", :order => "controller_name, action_name").collect(&:controller_action)
-    end
-    
     def host_name
       `hostname -s`.chomp
     end
@@ -73,13 +65,12 @@ class LoggedException < ActiveRecord::Base
   end
 
   def self.class_names
-    connection.select_values "SELECT DISTINCT exception_class FROM #{LoggedException.quoted_table_name} ORDER BY exception_class"
+    select("DISTINCT exception_class").order(:exception_class).collect(&:exception_class)
   end
   
   def self.controller_actions
-    self.all(:select => "DISTINCT controller_name, action_name", :order => "controller_name, action_name").collect(&:controller_action)
+    select("DISTINCT controller_name, action_name").order(:controller_name,:action_name).collect(&:controller_action)
   end
-  
   
   private
   @@rails_root      = Pathname.new(Rails.root).cleanpath.to_s
