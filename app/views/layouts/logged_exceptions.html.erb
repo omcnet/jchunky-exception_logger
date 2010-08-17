@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Exception Logger" %></title>
+    <meta charset="UTF-8" />
+    <%= javascript_include_tag :defaults, 'exception_logger.js' %>
+    <%= stylesheet_link_tag 'exception_logger'  %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
+    <div id="container">
+      <%= yield %>
+    </div>
+    <br style="clear:both" />
+  </body>
+</html>
