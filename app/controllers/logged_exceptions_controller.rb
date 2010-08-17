@@ -1,7 +1,6 @@
 class LoggedExceptionsController < ApplicationController
 
   cattr_accessor :application_name
-  layout nil
 
   #ApplicationController.class_eval do
   #  rescue_from Exception, :with => :log_exception_handler
@@ -52,7 +51,6 @@ class LoggedExceptionsController < ApplicationController
   end
 
   def destroy_all
-    debugger;
     LoggedException.delete_all(:id => params[:ids]) unless params[:ids].blank?
     query
   end

@@ -11,4 +11,6 @@ en:
       last_few_days: Last few days
       last_7_days: Last 7 days
       last_30_days: Last 30 days
+    show:
+      title: Logged Exception
       

@@ -28,6 +28,15 @@ module LoggedExceptionsHelper
     content_tag(:ul, list_items)
   end
 
+  def page_title(text)
+    title = ""
+    unless controller.application_name.blank?
+      title << "#{controller.application_name} :: "
+    end
+    title << text.to_s
+    content_for(:title, title.to_s)
+  end
+
   # http://github.com/mislav/will_paginate/blob/rails3/lib/will_paginate/view_helpers/link_renderer.rb
   class PaginationRenderer < WillPaginate::ViewHelpers::LinkRenderer
 
