@@ -1,8 +1,12 @@
-== 0.1.5
+== 0.1.5 (2010-08-17)
+
+=== New
+
+* Gem: Post Installer Infos
 
 === Changes
 
-* remove and no longer maintain code to send emails
+* remove unmaintained code to send emails
 ** use http://github.com/rails/exception_notification instead.
 ** instructions added to the readme
 * layout file for index and show
