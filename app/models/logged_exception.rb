@@ -10,13 +10,6 @@ class LoggedException < ActiveRecord::Base
         :message         => message,
         :backtrace       => exception.backtrace,
         :request         => controller.request
-      
-      deliver_exception(e)
-    end
-    
-    def deliver_exception(e)
-      puts LoggedExceptionsMailer.mailer_config
-      LoggedExceptionsMailer.deliver_exception(e) if LoggedExceptionsMailer.mailer_config[:deliver]
     end
     
     def host_name

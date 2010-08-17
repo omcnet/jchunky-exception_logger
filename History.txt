@@ -1,3 +1,16 @@
+== 0.1.5
+
+=== Changes
+
+* remove and no longer maintain code to send emails
+** use http://github.com/rails/exception_notification instead.
+** instructions added to the readme
+* layout file for index and show
+
+=== Migration
+
+* adapt class find methods to use new syntax
+
 == 0.1.4 (2010-08-15)
 
 === Optimization

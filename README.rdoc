@@ -20,7 +20,11 @@ Inside your Gemfile:
 
   gem "exception_logger", :require => "exception_logger"
 
-Inside your ApplicationController
+and then run:
+
+  bundle install
+
+Inside your ApplicationController:
 
   include ExceptionLogger::ExceptionLoggable # loades the module
   rescue_from Exception, :with => :log_exception_handler # tells rails to forward the 'Exception' (you can change the type) to the handler of the module
@@ -47,6 +51,22 @@ You can use the rake tasks
 
 to see and check the routes.
 
+== Exception Notification
+
+=== by Email
+
+Rails directly provides a plugin called "Exception Notification" ( http://github.com/rails/exception_notification ).
+
+Just download the plugin and follow the usage instructions from the README file ( http://github.com/rails/exception_notification/blob/master/README ) and add this code to one of your initializer files
+
+  # Example: put this to config/initializers/exception_notification.rb
+  Whatever::Application.config.middleware.use ExceptionNotifier,
+    :email_prefix => "[Whatever] ",
+    :sender_address => %{"notifier" <notifier@example.com>},
+    :exception_recipients => %w{exceptions@example.com}
+
+Restart your server and you are done. (Don't forget to setup your email settings inside your environment files.)
+
 == Authentication
 
 If you want, and believe me you want that, you can add the following lines to your environment to enable Authentication
@@ -70,7 +90,7 @@ and (if you use declarative_authorization) add this to your authorization_rules.
 
   role :admin do
     has_permission_on :logged_exceptions, :to => :manage
-
+    ...
 
 == Upgrading from the old plugin
 
@@ -82,7 +102,7 @@ If you have used the exception_logger plugin for your rails2 application and wan
 
 == Legacy
 
-For more and older details read the README.old File (old plugin).
+For more and older details read the README.old File.
 
 == Note on Patches/Pull Requests
  
