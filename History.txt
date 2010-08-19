@@ -1,3 +1,16 @@
+== 0.1.6
+
+=== Testing
+
+* Create Rails Test App at test/rails_root
+* Create Tests for logged_exception (Model)
+* Create Tests for logged_exceptions_controller (Controller)
+** Added Tests for GET requests
+
+=== Optimization
+
+* Do not require RedCloth (fallback to simple_format if RedCloth not available)
+
 == 0.1.5 (2010-08-17)
 
 === New

@@ -10,10 +10,12 @@ begin
     gem.homepage = "http://github.com/QuBiT/exception_logger"
     gem.authors = ["Roland Guem"]
     gem.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*", "{public}/**/*"]
+    gem.test_files = Dir["{test}/**/*"]
     gem.add_dependency 'rails', '>=3.0.0.rc'
     gem.add_dependency "will_paginate", ">= 3.0.pre2"
     gem.add_dependency "meta_where", ">= 0.5.2"
     gem.add_dependency "i18n", ">= 0.4.1"
+    gem.add_development_dependency "shoulda", ">= 2.11.3"
     gem.extra_rdoc_files = ["LICENSE","README.rdoc"]
     gem.post_install_message = %q{
 _()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_()_
@@ -30,36 +32,35 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
+ENV['BUNDLE_GEMFILE'] = File.dirname(__FILE__) + '/test/rails_root/Gemfile'
+
+#require 'rake'
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
+require 'cucumber/rake/task'
+require 'spec/rake/spectask'
 
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
+namespace :test do
+  Rake::TestTask.new(:basic => %w(test:generator:rails_setup test:generator:exception_migration)) do |task|
+    task.libs << "lib"
+    task.libs << "test"
+    task.pattern = "test/**/*_test.rb"
+    #task.verbose = false
   end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "--format progress"
+    t.profile = 'features'
   end
-end
 
-task :test => :check_dependencies
+  namespace :generator do
 
-task :default => :test
+    task :rails_setup do
+      system "cd test && rails new rails_root --skip"
+    end
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+    task :exception_migration do
+      system "cd test/rails_root && bundle install && ./script/rails generate exception_migration && rake db:migrate db:test:prepare"
+    end
+  end
 
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "ExceptionLoggerV3 #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
 end
