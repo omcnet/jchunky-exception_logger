@@ -2,7 +2,8 @@
 
 === Testing
 
-* Create Rails Test App at test/rails_root
+* Create Rails Test App at test/rails_root on demand
+** just store needed files and create the other by the rails generator
 * Create Tests for logged_exception (Model)
 * Create Tests for logged_exceptions_controller (Controller)
 ** Added Tests for GET requests
