@@ -59,7 +59,7 @@ namespace :test do
     end
 
     task :exception_migration do
-      system "cd test/rails_root && bundle install && ./script/rails generate exception_migration && rake db:migrate db:test:prepare"
+      system "cd test/rails_root && bundle install && ./script/rails generate exception_logger:migration && rake db:migrate db:test:prepare"
     end
   end
 
