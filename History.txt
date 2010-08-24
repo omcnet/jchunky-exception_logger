@@ -1,4 +1,14 @@
-== 0.1.6
+== 0.1.6 (2010-08-24)
+
+=== New
+
+* Generator: exception_logger:stylescripts
+** copies the stylesheet for the exception logger to the public dir
+** copies the javascript for the exception logger to the public dir
+
+=== Changes
+
+* Generator: exception_migration renamed to exception_logger:migration
 
 === Testing
 
@@ -7,6 +17,7 @@
 * Create Tests for logged_exception (Model)
 * Create Tests for logged_exceptions_controller (Controller)
 ** Added Tests for GET requests
+** Added Tests for XHR requests
 
 === Optimization
 

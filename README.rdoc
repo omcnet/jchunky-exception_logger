@@ -29,17 +29,29 @@ Inside your ApplicationController:
   include ExceptionLogger::ExceptionLoggable # loades the module
   rescue_from Exception, :with => :log_exception_handler # tells rails to forward the 'Exception' (you can change the type) to the handler of the module
 
-== Database Setup
+== Generators
+
+=== Database Setup
 
 Use
 
-  rails g exception_migration
+  rails g exception_logger:migration
 
 This will create a database migration
 
   TIMESTAMP_add_exception_table.rb
 
 inside db/migrations
+
+=== Stylesheet and Javascript
+
+You can copy the stylesheet and javascript to your applications public directory by using
+
+  rails g exception_logger:stylescripts
+
+This allows you to customize those files.
+
+This will be also necessary if you use a webserver ( e.g. passenger+nginx ) in front of rails which does the static file handling for you.
 
 == Routing
 
@@ -104,7 +116,9 @@ If you have used the exception_logger plugin for your rails2 application and wan
 
 For more and older details read the README.old File.
 
-== Development and Testing
+== Testing & Development
+
+Testing should always start before the actual development.
 
 You can test this gem very easily. Just run:
 
