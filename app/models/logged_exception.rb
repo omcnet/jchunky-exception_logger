@@ -23,7 +23,7 @@ class LoggedException < ActiveRecord::Base
   scope :by_action, lambda {|action_name| where(:action_name => action_name)}
   scope :message_like, lambda {|query|  where(:message.matches => "%#{query}%")}
   scope :days_old, lambda {|day_number| where(:created_at.gteq => day_number.to_f.days.ago.utc)}
-  scope :sorted, order(:created_at.desc)
+  scope :sorted, order('created_at desc')
   
   def name
     "#{self.exception_class} in #{self.controller_action}"
