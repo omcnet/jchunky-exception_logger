@@ -18,7 +18,7 @@ This gem is hosted on RubyGems.org: http://rubygems.org/gems/exception_logger
 
 Inside your Gemfile:
 
-  gem "exception_logger", :require => "exception_logger"
+  gem "exception_logger", :require => "exception_logger", :git => "git://github.com/jchunky/exception_logger.git"
 
 and then run:
 
