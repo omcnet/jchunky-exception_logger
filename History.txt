@@ -1,3 +1,7 @@
+== 0.1.6.20110121 (2011-01-21)
+
+* Updated dependency to released versions of Rails 3
+
 == 0.1.6 (2010-08-24)
 
 === New
